@@ -4,6 +4,10 @@ node default {
   include java
 }
 
+package { 'curl':
+  ensure => installed
+}
+
 class { 'ruby':
   version => '2.0.0'
 }

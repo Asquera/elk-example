@@ -1,0 +1,37 @@
+require 'rake/task'
+require 'pry'
+
+BASE_DIR = File.dirname(__FILE__)
+
+# downloads the dataset
+FILES = [
+  'u.genre',
+  'u.item'
+]
+
+def tmp_dir
+  File.join(Dir.tmpdir, 'movies100k')
+end
+
+def dataset_exists?
+  Dir.chdir(tmp_dir) do
+    FILES.all? { |f| File.file?(f) }
+  end
+rescue
+  false
+end
+
+def download_dataset(url)
+  Dir.mktmpdir('movies100k') unless tmp_dir
+
+  output_file = File.join(tmp_dir, 'movies.zip')
+  sh %{curl -L #{url} > #{output_file}}
+end
+
+desc "Download the movies 100k dataset and extracts it"
+task :download do
+  URL = "http://files.grouplens.org/datasets/movielens/ml-100k.zip"
+  unless dataset_exists?
+    download_dataset URL
+  end
+end

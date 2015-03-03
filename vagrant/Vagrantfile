@@ -1,15 +1,15 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-Vagrant.configure(1) do |config|
+Vagrant.configure(2) do |config|
   config.vm.box = "puphpet/ubuntu1404-x64"
   config.vm.network "private_network", ip: "192.168.35.10"
   config.ssh.forward_agent = true
 
-  config.vm.provision "shell", inline: "sudo apt-get update"
+#  config.vm.provision "shell", inline: "sudo apt-get update"
   config.vm.provision "puppet" do |puppet|
     puppet.manifests_path = "manifests"
-    puppet.manifest_file  = "nodes.pp"
+    puppet.manifest_file  = "site.pp"
     puppet.module_path    = ["modules"]
   end
 end

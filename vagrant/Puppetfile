@@ -3,5 +3,14 @@
 
 forge "https://forgeapi.puppetlabs.com"
 
+mod "saz/vim"
+
 mod 'theforeman-git'
+
 mod 'puppetlabs-ruby'
+mod "puppetlabs/apt"
+mod "puppetlabs/stdlib"
+mod "puppetlabs/java"
+
+mod "elasticsearch/elasticsearch", "0.4.0"
+mod "elasticsearch/logstash"

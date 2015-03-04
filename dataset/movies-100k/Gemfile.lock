@@ -9,6 +9,12 @@ GIT
       faraday
       psych-inherit-file (~> 1.0)
 
+PATH
+  remote: .
+  specs:
+    dataset (0.0.1)
+      virtus (~> 1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -66,8 +72,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bundler (~> 1.6)
+  dataset!
   elasticsearch-rake-tasks!
   eson
   pry
-  rake
-  virtus
+  rake (~> 10.0)

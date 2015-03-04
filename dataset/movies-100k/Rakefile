@@ -1,4 +1,5 @@
 require 'rake/task'
+require 'dataset'
 require 'pry'
 
 load 'elasticsearch-rake-tasks.rake'

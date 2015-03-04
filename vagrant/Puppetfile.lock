@@ -3,7 +3,7 @@ FORGE
   specs:
     elasticsearch-elasticsearch (0.4.0)
       puppetlabs-stdlib (>= 3.2.0)
-    elasticsearch-logstash (0.5.1)
+    elasticsearch-logstash (0.5.0)
       ispavailability-file_concat (>= 0.1.0)
       puppetlabs-stdlib (>= 3.2.0)
     ispavailability-file_concat (0.1.0)
@@ -19,7 +19,7 @@ FORGE
 
 DEPENDENCIES
   elasticsearch-elasticsearch (= 0.4.0)
-  elasticsearch-logstash (>= 0)
+  elasticsearch-logstash (= 0.5.0)
   puppetlabs-apt (>= 0)
   puppetlabs-java (>= 0)
   puppetlabs-ruby (>= 0)

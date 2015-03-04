@@ -1,4 +1,9 @@
 source 'https://rubygems.org'
 
 gem 'rake'
+gem 'elasticsearch-rake-tasks', github: 'Asquera/elasticsearch-rake-tasks'
+
 gem 'pry'
+
+gem 'eson'
+gem 'virtus'

@@ -1,6 +1,8 @@
 require 'rake/task'
 require 'pry'
 
+load 'elasticsearch-rake-tasks.rake'
+
 BASE_DIR = File.dirname(__FILE__)
 DATASET_FILE = 'movies.zip'
 
@@ -38,4 +40,13 @@ task :download do
   else
     puts "Dataset already downloaded"
   end
+end
+
+desc "Creates the seed file out of the dataset"
+task :create_data_set => [:download] do
+  dataset_dir = File.join(tmp_dir, 'ml-100k')
+
+  # just create seed file from dataset
+  loader = Example::DataSetLoader.new(dataset_dir)
+  loader.create_movie_seed_file('u.item', 'item_seed.json')
 end

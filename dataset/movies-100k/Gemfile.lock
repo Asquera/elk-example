@@ -1,18 +1,73 @@
+GIT
+  remote: git://github.com/Asquera/elasticsearch-rake-tasks.git
+  revision: e2c788e785358e7fbc0809a9c56214d69dccb6a6
+  specs:
+    elasticsearch-rake-tasks (0.0.1)
+      activesupport (~> 3.2.0)
+      eson
+      eson-more
+      faraday
+      psych-inherit-file (~> 1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
+    activesupport (3.2.21)
+      i18n (~> 0.6, >= 0.6.4)
+      multi_json (~> 1.0)
+    addressable (2.3.7)
+    axiom-types (0.1.1)
+      descendants_tracker (~> 0.0.4)
+      ice_nine (~> 0.11.0)
+      thread_safe (~> 0.3, >= 0.3.1)
     coderay (1.1.0)
+    coercible (1.0.0)
+      descendants_tracker (~> 0.0.1)
+    descendants_tracker (0.0.4)
+      thread_safe (~> 0.3, >= 0.3.1)
+    equalizer (0.0.9)
+    eson (0.8.0)
+      eson-core (= 0.8.0)
+      eson-dsl (= 0.8.0)
+      eson-http (= 0.8.0)
+    eson-core (0.8.0)
+      multi_json
+    eson-dsl (0.8.0)
+    eson-http (0.8.0)
+      addressable
+      eson-core
+      faraday (~> 0.8.0)
+      net-http-persistent
+    eson-more (0.8.0)
+      eson-core
+    faraday (0.8.9)
+      multipart-post (~> 1.2.0)
+    i18n (0.7.0)
+    ice_nine (0.11.1)
     method_source (0.8.2)
+    multi_json (1.10.1)
+    multipart-post (1.2.0)
+    net-http-persistent (2.9.4)
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    psych-inherit-file (1.0.0)
     rake (10.4.2)
     slop (3.6.0)
+    thread_safe (0.3.4)
+    virtus (1.0.4)
+      axiom-types (~> 0.1)
+      coercible (~> 1.0)
+      descendants_tracker (~> 0.0, >= 0.0.3)
+      equalizer (~> 0.0, >= 0.0.9)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  elasticsearch-rake-tasks!
+  eson
   pry
   rake
+  virtus

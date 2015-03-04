@@ -1,0 +1,13 @@
+---
+properties:
+  id:
+    enabled: false
+  age:
+    type: integer
+  gender:
+    enabled: false
+  occupation:
+    type: string
+    analyer: standard_analyzer_with_punctuation_removal
+  zip_code:
+    type: integer

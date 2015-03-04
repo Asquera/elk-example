@@ -1,0 +1,30 @@
+---
+index:
+  analysis:
+    analyzer:
+      standard_analyzer_with_punctuation_removal:
+        filter:
+          - standard
+          - lowercase
+          - asciifolding
+          - elision
+          - punctuation_removal
+        tokenizer: standard
+      standard_shingled_with_punctuation_removal:
+        filter:
+          - standard
+          - lowercase
+          - asciifolding
+          - elision
+          - punctuation_removal
+          - shingled
+        tokenizer: standard
+    filter:
+      punctuation_removal:
+        type: pattern_replace
+        pattern: "\\p{Punct}"
+        replacement: ""
+      shingled:
+        type: shingle
+        min_shingle_size: 2
+        max_shingle_size: 3

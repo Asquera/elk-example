@@ -1,0 +1,18 @@
+---
+properties:
+  _id:
+    enabled: false
+  id:
+    enabled: false
+  title:
+    type: string
+    analyzer: standard_analyzer_with_punctuation_removal
+  release_date:
+    type: date
+  video_release_date:
+    type: date
+  imdb_url:
+    type: string
+    enabled: false
+  genre:
+    type: integer

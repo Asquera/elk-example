@@ -5,9 +5,10 @@ properties:
   age:
     type: integer
   gender:
-    enabled: false
+    type: string
+    indeX: not_analyzed
   occupation:
     type: string
-    analyer: standard_analyzer_with_punctuation_removal
+    index: not_analyzed
   zip_code:
     type: integer

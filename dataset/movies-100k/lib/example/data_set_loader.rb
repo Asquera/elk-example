@@ -86,7 +86,7 @@ module Example
           movie_id  = l[1]
           ratings   = l[2]
           # transform seconds from epoch to milliseconds
-          timestamp = Integer(l[3])
+          timestamp = Integer(l[3]) * 1000
 
           output << "{ index: { \"_type\": \"rating\" } }\n"
           output << "{ \"user_id\": #{user_id}, \"movie_id\": #{movie_id}, \"rating\": #{ratings}, \"timestamp\": #{timestamp} }\n"

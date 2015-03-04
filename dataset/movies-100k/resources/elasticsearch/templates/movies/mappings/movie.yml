@@ -18,3 +18,4 @@ properties:
     enabled: false
   genre:
     type: string
+    index: not_analyzed

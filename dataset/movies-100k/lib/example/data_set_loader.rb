@@ -5,6 +5,11 @@ module Example
     attr_reader :dataset_dir
     attr_reader :genres
 
+    GENDERS = {
+      'M' => 'male',
+      'F' => 'female'
+    }
+
     def initialize(dataset_dir)
       @dataset_dir = dataset_dir
       @genres = load_genres('u.genre')
@@ -19,6 +24,30 @@ module Example
         end
       end
       result
+    end
+
+    def create_user_seed_file(input_file, output)
+      File.open(File.join(dataset_dir, input_file), 'r:iso-8859-1') do |file|
+        file.each_line do |line|
+          components = line.chomp.split("|")
+          id         = components[0]
+          age        = components[1]
+          gender     = GENDERS.fetch(components[2]) { 'unknown' }
+          occupation = components[3]
+          zip_code   = components[4]
+
+          user = User.new(
+            id:         id,
+            age:        age,
+            gender:     gender,
+            occupation: occupation,
+            zip_code:   zip_code
+          )
+
+          output << { index: { '_type' => 'user' } }.to_json + "\n"
+          output << user.attributes.to_json + "\n"
+        end
+      end
     end
 
     def create_movie_seed_file(input_file, output)
@@ -44,6 +73,22 @@ module Example
           # write movie as ES bulk entries
           output << { index: { '_type' => 'movie' } }.to_json + "\n"
           output << movie.attributes.to_json + "\n"
+        end
+      end
+    end
+
+    def create_ratings_seed_file(input_file, output)
+      File.open(File.join(dataset_dir, input_file), 'r:iso-8859-1') do |file|
+        file.each_line do |line|
+          l = line.chomp.split("\t")
+
+          user_id   = l[0]
+          movie_id  = l[1]
+          ratings   = l[2]
+          timestamp = l[3]
+
+          output << "{ index: { \"_type\" => \"rating\" } }\n"
+          output << "{ \"user_id\": #{user_id}, \"movie_id\": #{movie_id}, \"rating\": #{ratings}, \"timestamp\": #{timestamp} }\n}"
         end
       end
     end

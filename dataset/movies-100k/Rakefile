@@ -51,7 +51,9 @@ task :create_data_set => [:download] do
   # just create seed file from dataset
   File.open(seed_file, 'w') do |output|
     loader = Example::DataSetLoader.new(dataset_dir)
+    loader.create_user_seed_file('u.user', output)
     loader.create_movie_seed_file('u.item', output)
+    loader.create_ratings_seed_file('u.data', output)
   end
 
   puts "Created seed file: #{seed_file}"

@@ -24,18 +24,6 @@ After provisioning succeeds log into the box
 $ vagrant ssh
 ```
 
-The repository should be available at `/vagrant` inside the VM. Change directory and set up the project.
-
-```
-$ cd /vagrant/dateset/movies100k
-$ bundle install
-```
-
-This project folder contains a Rakefile, to see all available rake tasks run:
-
-```
-$ rake -T
-```
 
 
 ## Logstash
@@ -50,17 +38,3 @@ It should run already and is available at url `http://localhost:5601` inside the
 access Kibana from the host access [http://192.168.35.10:5601](http://192.168.35.10:5601).
 
 
-## Dataset
-
-We use the [movies-100k](http://grouplens.org/datasets/movielens/) dataset that contains 100.000 ratings from nearly 1.000 users for about 1.700 different movies, all part of the [Movielens.org](http://movielens.org) website.
-
-Go to the data set folder and run the following commands to upload to Elasticsearch
-
-```bash
-$ cd /vagrant/dataset/movies100k
-$ rake create_data_set
-$ rake es:movies:create[http://localhost:9200,movies]
-$ curl -X POST 'http://localhost:9200/movies/_bulk' --data-binary @item_seed.json > /dev/null
-```
-
-This downloads the movies100k data set to a tmp folder, creates the data set suitable for Elasticsearch. Then an ES index with the template for the data set is created and last the generated bulk file with the data set is uploaded to Elasticsearch.

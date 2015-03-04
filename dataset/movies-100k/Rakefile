@@ -45,9 +45,14 @@ end
 
 desc "Creates the seed file out of the dataset"
 task :create_data_set => [:download] do
+  seed_file   = 'item_seed.json'
   dataset_dir = File.join(tmp_dir, 'ml-100k')
 
   # just create seed file from dataset
-  loader = Example::DataSetLoader.new(dataset_dir)
-  loader.create_movie_seed_file('u.item', 'item_seed.json')
+  File.open(seed_file, 'w') do |output|
+    loader = Example::DataSetLoader.new(dataset_dir)
+    loader.create_movie_seed_file('u.item', output)
+  end
+
+  puts "Created seed file: #{seed_file}"
 end

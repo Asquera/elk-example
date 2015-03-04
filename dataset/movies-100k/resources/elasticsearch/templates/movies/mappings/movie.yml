@@ -9,10 +9,12 @@ properties:
     analyzer: standard_analyzer_with_punctuation_removal
   release_date:
     type: date
+    format: "YYYY-MM-dd"
   video_release_date:
     type: date
+    format: "YYYY-MM-dd"
   imdb_url:
     type: string
     enabled: false
   genre:
-    type: integer
+    type: string

@@ -11,4 +11,8 @@ module Example
     attribute :imdb_url, String
     attribute :genre, Array[String]
   end
+
+  def to_json
+    attributes.to_json
+  end
 end

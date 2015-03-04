@@ -1,4 +1,4 @@
-require 'pry'
+require 'date'
 
 module Example
   class DataSetLoader
@@ -21,7 +21,7 @@ module Example
       result
     end
 
-    def create_movie_seed_file(input_file, output_file)
+    def create_movie_seed_file(input_file, output)
       File.open(File.join(dataset_dir, input_file), 'r:iso-8859-1') do |file|
         file.each_line do |line|
           components = line.chomp.split("|")
@@ -31,12 +31,25 @@ module Example
           video_date   = components[3]
           imdb_url     = components[4]
           genre        = detect_genres(components[5..-1].map{ |i| Integer(i) })
+
+          movie = Movie.new(
+            id:           id,
+            title:        title,
+            release_date: release_date,
+            imdb_url:     imdb_url,
+            genre:        genre
+          )
+          movie.video_release_date = video_date unless video_date.empty?
+
+          # write movie as ES bulk entries
+          output << { index: { '_type' => 'movie' } }.to_json + "\n"
+          output << movie.attributes.to_json + "\n"
         end
       end
     end
 
     def detect_genres(list)
-      list.each_index.select{ |i| list[i] > 0 }
+      list.each_index.select{ |i| list[i] > 0 }.map{ |i| genres.fetch(i) }
     end
   end
 end

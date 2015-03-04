@@ -40,8 +40,14 @@ $ rake -T
 
 ## Logstash
 
+TODO
+
 
 ## Kibana
+
+Kibana is installed into the folder `/home/vagrant/kibana/kibana-4.0.0-linux`.
+It should run already and is available at url `http://localhost:5601` inside the VM. To
+access Kibana from the host access [http://192.168.35.10:5601](http://192.168.35.10:5601).
 
 
 ## Dataset

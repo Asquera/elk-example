@@ -19,7 +19,7 @@ class { "elasticsearch":
   status       => 'enabled',
   manage_repo  => true,
   repo_version => '1.4',
-  version      => '1.4.2',
+  version      => '1.4.4',
   config       => {
     "path.conf"                   => "/etc/elasticsearch",
     "path.data"                   => "/var/lib/elasticsearch",
@@ -44,15 +44,24 @@ apt::source { 'logstash':
   include_src => false
 } -> class { "logstash": }
 
-# file { "/etc/init.d/logstash":
-#   ensure  => absent,
-#   require => Class['logstash']
-# }
 
-# file { "/etc/init.d/logstash-web":
-#   ensure  => absent,
-#   require => Class['logstash']
-# }
+# Kibana
+
+file { '/home/vagrant/kibana':
+  ensure => 'directory',
+  group  => 'vagrant',
+  owner  => 'vagrant',
+}
+
+exec { 'download_kibana':
+  command => '/usr/bin/curl -L https://download.elasticsearch.org/kibana/kibana/kibana-4.0.0-linux-x64.tar.gz | /bin/tar xvz -C /home/vagrant/kibana',
+  require => [ Package['curl'], File['/home/vagrant/kibana'], Class['elasticsearch'] ],
+}
+
+exec {'start kibana':
+  command => '/bin/sleep 10 && /vagrant/kibana/kibana-4.0.0-linux-x64/bin/kibana & ',
+  require => [ Exec['download_kibana']]
+}
 
 Package['java'] -> Package['elasticsearch']
 Package['java'] -> Package['logstash']

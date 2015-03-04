@@ -34,6 +34,16 @@ elasticsearch::instance { 'primary':
   config => { "node.name" => "el-example" }
 }
 
+elasticsearch::plugin { 'lmenezes/elasticsearch-kopf':
+  module_dir => 'kopf',
+  instances  => 'primary'
+}
+
+elasticsearch::plugin { 'polyfractal/elasticsearch-inquisitor':
+  module_dir => 'inquisitor',
+  instances  => 'primary'
+}
+
 # add logstash repository to /etc/apt/sources.list.d/
 apt::source { 'logstash':
   comment     => 'This is the official logstash repository',

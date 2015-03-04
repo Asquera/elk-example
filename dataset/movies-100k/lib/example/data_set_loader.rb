@@ -31,7 +31,7 @@ module Example
         file.each_line do |line|
           components = line.chomp.split("|")
           id         = components[0]
-          age        = components[1]
+          age        = Integer(components[1])
           gender     = GENDERS.fetch(components[2]) { 'unknown' }
           occupation = components[3]
           zip_code   = components[4]
@@ -44,8 +44,8 @@ module Example
             zip_code:   zip_code
           )
 
-          output << { index: { '_type' => 'user' } }.to_json + "\n"
-          output << user.attributes.to_json + "\n"
+          output << "{ index: { \"_type\": \"user\" } }\n"
+          output << "{ \"id\": #{id}, \"age\": #{age}, \"gender\": \"#{gender}\", \"occupation\": \"#{occupation}\", \"zip_code\": \"#{zip_code}\" }\n"
         end
       end
     end

@@ -57,20 +57,28 @@ apt::source { 'logstash':
 
 # Kibana
 
-file { '/home/vagrant/kibana':
+file { '/usr/share/kibana':
   ensure => 'directory',
   group  => 'vagrant',
   owner  => 'vagrant',
 }
 
 exec { 'download_kibana':
-  command => '/usr/bin/curl -L https://download.elasticsearch.org/kibana/kibana/kibana-4.0.0-linux-x64.tar.gz | /bin/tar xvz -C /home/vagrant/kibana',
-  require => [ Package['curl'], File['/home/vagrant/kibana'], Class['elasticsearch'] ],
+  command => '/usr/bin/curl -L https://download.elasticsearch.org/kibana/kibana/kibana-4.0.0-linux-x64.tar.gz | /bin/tar xvz -C /usr/share/kibana',
+  require => [ Package['curl'], File['/usr/share/kibana'], Class['elasticsearch'] ],
 }
 
-exec {'start kibana':
-  command => '/home/vagrant/kibana/kibana-4.0.0-linux-x64/bin/kibana & ',
-  require => [ Exec['download_kibana']]
+file { '/etc/init.d/kibana':
+  ensure  => 'present',
+  owner   => 'root',
+  group   => 'root',
+  mode    => '0755',
+  content => template('custom/kibana'),
+  require => [ Exec['download_kibana'] ]
+} -> service { 'start kibana':
+  name    => 'kibana',
+  ensure  => 'running',
+  require => File['/etc/init.d/kibana'],
 }
 
 Package['java'] -> Package['elasticsearch']

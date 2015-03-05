@@ -1,7 +1,7 @@
 Elasticsearch Example
 ---------------------
 
-The Elasticsearch Example VM is provisioned via vagrant and puppet.
+ELK stack VM with Vagrant and Puppet including the Movies100k rating dataset by Movielens.
 
 ## Setup
 

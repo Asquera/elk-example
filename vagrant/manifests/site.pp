@@ -75,7 +75,9 @@ file { '/etc/init.d/kibana':
   mode    => '0755',
   content => template('custom/kibana'),
   require => [ Exec['download_kibana'] ]
-} -> service { 'start kibana':
+}
+
+service { 'kibana':
   name    => 'kibana',
   ensure  => 'running',
   require => File['/etc/init.d/kibana'],

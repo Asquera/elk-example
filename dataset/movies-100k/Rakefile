@@ -5,10 +5,11 @@ require 'pry'
 load 'elasticsearch-rake-tasks.rake'
 
 BASE_DIR = File.dirname(__FILE__)
+ORIGIN_FILE = 'ml-1m'
 DATASET_FILE = 'movies.zip'
 
 def tmp_dir
-  File.join(Dir.tmpdir, 'movies100k')
+  File.join(Dir.tmpdir, ORIGIN_FILE)
 end
 
 def dataset_exists?
@@ -35,7 +36,7 @@ end
 
 desc "Download the movies 100k dataset and extracts it"
 task :download do
-  URL = "http://files.grouplens.org/datasets/movielens/ml-100k.zip"
+  URL = "http://files.grouplens.org/datasets/movielens/#{ORIGIN_FILE}.zip"
   unless dataset_exists?
     download_dataset URL
   else
@@ -44,9 +45,9 @@ task :download do
 end
 
 desc "Creates the seed file out of the dataset"
-task :create_data_set => [:download] do
+task :create_100k_data_set => [:download] do
   seed_file   = 'item_seed.json'
-  dataset_dir = File.join(tmp_dir, 'ml-100k')
+  dataset_dir = File.join(tmp_dir, ORIGIN_FILE)
 
   # just create seed file from dataset
   File.open(seed_file, 'w') do |output|
@@ -57,4 +58,37 @@ task :create_data_set => [:download] do
   end
 
   puts "Created seed file: #{seed_file}"
+end
+
+desc "Creates the seed file out of the dataset"
+task :create_1m_data_set => [:download] do
+  seed_file   = 'item_seed.json'
+  dataset_dir = File.join(tmp_dir, ORIGIN_FILE)
+
+  # just create seed file from dataset
+  File.open(seed_file, 'w') do |output|
+    loader = Example::DataSet1MLoader.new(dataset_dir)
+    loader.create_user_seed_file('users.dat', output)
+    loader.create_movie_seed_file('movies.dat', output)
+    loader.create_ratings_seed_file('ratings.dat', output)
+  end
+
+  puts "Created seed file: #{seed_file}"
+end
+
+desc "Uploads bulk file to the movies index"
+task :upload_bulk do
+  seed_file = 'item_seed.json'
+
+  client = Eson::HTTP::Client.new(server: 'http://localhost:9200', logger: '/dev/null')
+  File.open(seed_file, 'r') do |file|
+    file.each_slice(2) do |line|
+      index    = JSON.parse(line[0])
+      document = line[1]
+
+      client.bulk do |b|
+        b.index index: 'movies', type: index['index']['_type'], doc: document
+      end
+    end
+  end
 end

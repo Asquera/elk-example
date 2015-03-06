@@ -9,7 +9,7 @@
 # Description:       Enable service provided by daemon.
 ### END INIT INFO
 
-dir="/usr/share/kibana/kibana-4.0.0-linux-x64"
+dir="/usr/share/kibana/kibana-4.0.1-linux-x64"
 user="root"
 cmd="bin/kibana"
 

@@ -44,7 +44,7 @@ module Example
             zip_code:   zip_code
           )
 
-          output << "{ index: { \"_type\": \"user\" } }\n"
+          output << "{ \"index\": { \"_type\": \"user\" } }\n"
           output << "{ \"id\": #{id}, \"age\": #{age}, \"gender\": \"#{gender}\", \"occupation\": \"#{occupation}\", \"zip_code\": \"#{zip_code}\" }\n"
         end
       end
@@ -88,7 +88,7 @@ module Example
           # transform seconds from epoch to milliseconds
           timestamp = Integer(l[3]) * 1000
 
-          output << "{ index: { \"_type\": \"rating\" } }\n"
+          output << "{ \"index\": { \"_type\": \"rating\" } }\n"
           output << "{ \"user_id\": #{user_id}, \"movie_id\": #{movie_id}, \"rating\": #{ratings}, \"timestamp\": #{timestamp} }\n"
         end
       end

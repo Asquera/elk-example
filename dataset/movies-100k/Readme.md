@@ -1,7 +1,8 @@
-Movies 100k
------------
+Movielens Dataset
+-----------------
 
 This folder contains scripts and tasks to import the [movies-100k](http://grouplens.org/datasets/movielens/) dataset that contains 100.000 ratings from nearly 1.000 users for about 1.700 different movies, all part of the [Movielens.org](http://movielens.org) website.
+It also allows to download and import the [movies-1M](http://grouplens.org/datasets/movielens/) dataset with 1 million ratings from 6.000 users on 4.000 movies.
 
 
 The repository should be available at `/vagrant` inside the VM. Change directory and set up the dataset.
@@ -26,13 +27,20 @@ Go to the data set folder and run the following commands to upload the dataset t
 $ cd /vagrant/dataset/movies100k
 ```
 
-Then run the rake task:
+Then run the rake task, for the movies 100k data set:
 
 ```
 $ rake create_data_set
 ```
 
-this first downloads the movies100k data set to a tmp folder, then extracts and transforms all the users, genres, movies and ratings from the data set and creates a JSON file compatible with the [Elasticsearch Bulk API](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-bulk.html).
+For the data set containing 1M ratings use
+
+```
+$ rake create_1m_data_set
+```
+
+
+this first downloads the movies100k / 1M data set to a tmp folder, then extracts and transforms all the users, genres, movies and ratings from the data set and creates a JSON file compatible with the [Elasticsearch Bulk API](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-bulk.html).
 
 First we create an Elasticsearch index to store the data set and define the mappings for all types. We use the [elasticsearch-rake-tasks gem](https://github.com/Asquera/elasticsearch-rake-tasks) and run the following command:
 
@@ -46,6 +54,12 @@ The last step is to bulk upload the seed file to Elasticsearch, which is done by
 
 ```
 $ curl -X POST 'http://localhost:9200/movies/_bulk' --data-binary @item_seed.json > /dev/null
+```
+
+which might fail for the 1M documents bulk file or use the bulk upload command (takes a bit longer)
+
+```
+$ rake upload_bulk
 ```
 
 this uploads all entries from the bulk JSON file to the Elasticsearch index named `movies`.

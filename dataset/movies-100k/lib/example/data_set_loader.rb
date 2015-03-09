@@ -4,15 +4,17 @@ module Example
   class DataSetLoader
     attr_reader :dataset_dir
     attr_reader :genres
+    attr_reader :client
 
     GENDERS = {
       'M' => 'male',
       'F' => 'female'
     }
 
-    def initialize(dataset_dir)
+    def initialize(dataset_dir, client)
       @dataset_dir = dataset_dir
       @genres = load_genres('u.genre')
+      @client = client
     end
 
     def load_genres(filename)
@@ -51,6 +53,9 @@ module Example
     end
 
     def create_movie_seed_file(input_file, output)
+      # get all ratings as aggregations
+      aggs = RatingsAggregation.new(client).fetch_hash
+
       File.open(File.join(dataset_dir, input_file), 'r:iso-8859-1') do |file|
         file.each_line do |line|
           components = line.chomp.split("|")
@@ -66,7 +71,8 @@ module Example
             title:        title,
             release_date: release_date,
             imdb_url:     imdb_url,
-            genre:        genre
+            genre:        genre,
+            num_ratings:  aggs.fetch(Integer(id)) { 0 }
           )
           movie.video_release_date = video_date unless video_date.empty?
 

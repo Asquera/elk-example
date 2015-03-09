@@ -19,3 +19,6 @@ properties:
   genre:
     type: string
     index: not_analyzed
+  num_ratings:
+    type: integer
+    null_value: 0

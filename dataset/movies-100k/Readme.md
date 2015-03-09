@@ -30,7 +30,7 @@ $ cd /vagrant/dataset/movies100k
 Then run the rake task, for the movies 100k data set:
 
 ```
-$ rake create_data_set
+$ rake create_100k_data_set
 ```
 
 For the data set containing 1M ratings use

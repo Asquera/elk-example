@@ -7,6 +7,10 @@ load 'elasticsearch-rake-tasks.rake'
 BASE_DIR = File.dirname(__FILE__)
 DATASET_FILE = 'movies.zip'
 
+def es_client
+  @es_client ||= Eson::HTTP::Client.new(server: 'http://localhost:9200', logger: '/dev/null')
+end
+
 def tmp_dir(dataset)
   File.join(Dir.tmpdir, dataset)
 end
@@ -62,10 +66,10 @@ task :create_100k_data_set => [:download_100k] do
 
   # just create seed file from dataset
   File.open(seed_file, 'w') do |output|
-    loader = Example::DataSetLoader.new(dataset_dir)
+    loader = Example::DataSetLoader.new(dataset_dir, es_client)
     loader.create_user_seed_file('u.user', output)
-    loader.create_movie_seed_file('u.item', output)
     loader.create_ratings_seed_file('u.data', output)
+    loader.create_movie_seed_file('u.item', output)
   end
 
   puts "Created seed file: #{seed_file}"
@@ -78,10 +82,10 @@ task :create_1m_data_set => [:download_1m] do
 
   # just create seed file from dataset
   File.open(seed_file, 'w') do |output|
-    loader = Example::DataSet1MLoader.new(dataset_dir)
+    loader = Example::DataSet1MLoader.new(dataset_dir, es_client)
     loader.create_user_seed_file('users.dat', output)
-    loader.create_movie_seed_file('movies.dat', output)
     loader.create_ratings_seed_file('ratings.dat', output)
+    loader.create_movie_seed_file('movies.dat', output)
   end
 
   puts "Created seed file: #{seed_file}"
@@ -91,13 +95,12 @@ desc "Uploads bulk file to the movies index"
 task :upload_bulk do
   seed_file = 'item_seed.json'
 
-  client = Eson::HTTP::Client.new(server: 'http://localhost:9200', logger: '/dev/null')
   File.open(seed_file, 'r') do |file|
     file.each_slice(2) do |line|
       index    = JSON.parse(line[0])
       document = line[1]
 
-      client.bulk do |b|
+      es_client.bulk do |b|
         b.index index: 'movies', type: index['index']['_type'], doc: document
       end
     end

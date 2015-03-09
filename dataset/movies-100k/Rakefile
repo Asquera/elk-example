@@ -5,16 +5,15 @@ require 'pry'
 load 'elasticsearch-rake-tasks.rake'
 
 BASE_DIR = File.dirname(__FILE__)
-ORIGIN_FILE = 'ml-1m'
 DATASET_FILE = 'movies.zip'
 
-def tmp_dir
-  File.join(Dir.tmpdir, ORIGIN_FILE)
+def tmp_dir(dataset)
+  File.join(Dir.tmpdir, dataset)
 end
 
-def dataset_exists?
-  if File.directory?(tmp_dir)
-    File.file?(File.join(tmp_dir, DATASET_FILE))
+def dataset_exists?(dataset)
+  if File.directory?(tmp_dir(dataset))
+    File.file?(File.join(tmp_dir(dataset), DATASET_FILE))
   else
     false
   end
@@ -22,32 +21,44 @@ rescue
   false
 end
 
-def download_dataset(url)
-  unless File.directory?(tmp_dir)
-    puts "Creating directory: #{tmp_dir}"
-    Dir.mkdir(tmp_dir)
+def download_dataset(url, dataset)
+  unless File.directory?(tmp_dir(dataset))
+    puts "Creating directory: #{tmp_dir(dataset)}"
+    Dir.mkdir(tmp_dir(dataset))
   end
 
-  Dir.chdir(tmp_dir) do
+  Dir.chdir(tmp_dir(dataset)) do
     sh %{curl -X GET '#{url}' > #{DATASET_FILE}}
     sh %{unzip #{DATASET_FILE}}
   end
 end
 
 desc "Download the movies 100k dataset and extracts it"
-task :download do
-  URL = "http://files.grouplens.org/datasets/movielens/#{ORIGIN_FILE}.zip"
-  unless dataset_exists?
-    download_dataset URL
+task :download_100k do
+  file = "ml-100k"
+  url  = "http://files.grouplens.org/datasets/movielens/#{file}.zip"
+  unless dataset_exists?(file)
+    download_dataset url, file
+  else
+    puts "Dataset already downloaded"
+  end
+end
+
+desc "Download the movies 1M dataset and extracts it"
+task :download_1m do
+  file = "ml-1m"
+  url  = "http://files.grouplens.org/datasets/movielens/#{file}.zip"
+  unless dataset_exists?(file)
+    download_dataset url, file
   else
     puts "Dataset already downloaded"
   end
 end
 
 desc "Creates the seed file out of the dataset"
-task :create_100k_data_set => [:download] do
+task :create_100k_data_set => [:download_100k] do
   seed_file   = 'item_seed.json'
-  dataset_dir = File.join(tmp_dir, ORIGIN_FILE)
+  dataset_dir = File.join(tmp_dir('ml-100k'), 'ml-100k')
 
   # just create seed file from dataset
   File.open(seed_file, 'w') do |output|
@@ -61,9 +72,9 @@ task :create_100k_data_set => [:download] do
 end
 
 desc "Creates the seed file out of the dataset"
-task :create_1m_data_set => [:download] do
+task :create_1m_data_set => [:download_1m] do
   seed_file   = 'item_seed.json'
-  dataset_dir = File.join(tmp_dir, ORIGIN_FILE)
+  dataset_dir = File.join(tmp_dir('ml-1m'), 'ml-1m')
 
   # just create seed file from dataset
   File.open(seed_file, 'w') do |output|

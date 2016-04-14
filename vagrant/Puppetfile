@@ -12,5 +12,5 @@ mod "puppetlabs/apt"
 mod "puppetlabs/stdlib"
 mod "puppetlabs/java"
 
-mod "elasticsearch/elasticsearch", "0.4.0"
-mod "elasticsearch/logstash"
+mod "elastic/elasticsearch"
+mod "elastic/logstash"

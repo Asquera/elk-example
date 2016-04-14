@@ -8,4 +8,4 @@ properties:
     type: integer
   timestamp:
     type: date
-    format: basic_date_time
+    format: epoch_millis

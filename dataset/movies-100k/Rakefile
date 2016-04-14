@@ -97,12 +97,12 @@ task :upload_bulk do
   seed_file = 'item_seed.json'
 
   File.open(seed_file, 'r') do |file|
-    file.each_slice(2) do |line|
-      index    = JSON.parse(line[0])
-      document = line[1]
+    file.each_slice(2) do |lines|
+      type     = JSON.parse(lines[0])['index']['_type']
+      document = JSON.parse(lines[1])
 
       es_client.bulk index: 'movies', body: [
-        { index: { :_type => index['index']['_type'] }, data: document }
+        { 'index' => { '_type' => type, 'data' => document } }
       ]
     end
   end

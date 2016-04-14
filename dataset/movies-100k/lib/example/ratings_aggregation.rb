@@ -3,17 +3,23 @@ require 'json'
 
 module Example
   class RatingsAggregation
-    QUERY_JSON = {
+    QUERY_JSON =
+    {
       "query" => {
-          "match_all" => {}
+        "match_all" => {}
       },
       "size" => 0,
-      "facets" => {
+      "aggs" => {
         "ratings" => {
-          "terms_stats" => {
-            "key_field" => "movie_id",
-            "value_field" => "rating",
-            "size" => 10000
+          "terms" => {
+            "field" => "movie_id"
+          },
+          "aggs" => {
+            "rating_stats" => {
+              "stats" => {
+                "field" => "rating"
+              }
+            }
           }
         }
       }
@@ -26,8 +32,8 @@ module Example
     end
 
     def fetch_hash
-      response = client.with(index: 'movies', type: 'rating').search(QUERY_JSON)
-      aggs = response['facets']['ratings']['terms']
+      response = client.search index: 'movies', type: 'rating', body: QUERY_JSON
+      aggs = response['aggs']['ratings']['terms']
       Hash[ *aggs.collect{ |v| [v['term'], v] }.flatten ]
     end
   end

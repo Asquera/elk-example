@@ -1,7 +1,5 @@
 ---
 properties:
-  _timestamp:
-    enabled: true
   user_id:
     type: integer
   movie_id:
@@ -9,6 +7,5 @@ properties:
   rating:
     type: integer
   timestamp:
-    enabled: true
     type: date
     format: basic_date_time

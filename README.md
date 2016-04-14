@@ -44,3 +44,8 @@ $ bin/kibana plugin --install elasticsearch/marvel/2.3.1
 ```
 
 from the Kibana src folder.
+
+
+## Marvel
+
+To install Marvel follow the steps in the [Get Started Guide](https://www.elastic.co/guide/en/marvel/current/installing-marvel.html).

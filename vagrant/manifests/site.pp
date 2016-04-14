@@ -18,8 +18,8 @@ class { 'ruby::dev': }
 class { "elasticsearch":
   status       => 'enabled',
   manage_repo  => true,
-  repo_version => '2.3',
-  version      => '2.3.1',
+  repo_version => '2.x',
+  version      => '2.3.0',
   config       => {
     "path.conf"                   => "/etc/elasticsearch",
     "path.data"                   => "/var/lib/elasticsearch",
@@ -34,14 +34,17 @@ elasticsearch::instance { 'primary':
   config => { "node.name" => "el-example" }
 }
 
-elasticsearch::plugin { 'lmenezes/elasticsearch-kopf':
-  module_dir => 'kopf',
-  instances  => 'primary'
+elasticsearch::plugin { 'license':
+  instances => 'primary'
 }
 
-elasticsearch::plugin { 'polyfractal/elasticsearch-inquisitor':
-  module_dir => 'inquisitor',
-  instances  => 'primary'
+elasticsearch::plugin { 'marvel-agent':
+  instances => 'primary',
+  require   => Elasticsearch::Plugin['license']
+}
+
+elasticsearch::plugin { 'lmenezes/elasticsearch-kopf':
+  instances => 'primary'
 }
 
 # add logstash repository to /etc/apt/sources.list.d/

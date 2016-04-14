@@ -22,3 +22,6 @@ properties:
   num_ratings:
     type: integer
     null_value: 0
+  avg_rating:
+    type: float
+    null_value: 0.0

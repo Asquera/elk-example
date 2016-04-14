@@ -59,7 +59,8 @@ module Example
       File.open(File.join(dataset_dir, input_file), 'r:iso-8859-1') do |file|
         file.each_line do |line|
           components = line.chomp.split("|")
-          id           = components[0]
+
+          id           = Integer(components[0])
           title        = components[1]
           release_date = components[2]
           video_date   = components[3]
@@ -72,8 +73,12 @@ module Example
             release_date: release_date,
             imdb_url:     imdb_url,
             genre:        genre,
-            num_ratings:  aggs.fetch(Integer(id)) { 0 }
           )
+
+          if aggs[id]
+            movie.num_ratings = aggs[id].fetch('count') { 0 }
+            movie.avg_rating  = aggs[id].fetch('mean') { 0.0 }
+          end
           movie.video_release_date = video_date unless video_date.empty?
 
           # write movie as ES bulk entries

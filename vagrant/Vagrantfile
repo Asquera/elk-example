@@ -7,7 +7,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.box = "puphpet/ubuntu1404-x64"
   config.vm.hostname = "elasticsearch.dev"
-  config.vm.network "private_network", ip: "192.168.35.10"
+  config.vm.network "private_network", ip: "172.17.1.22"
   config.ssh.forward_agent = true
 
   config.vm.synced_folder "..", "/vagrant"

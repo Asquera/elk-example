@@ -11,5 +11,6 @@ module Example
     attribute :imdb_url, String
     attribute :genre, Array[String]
     attribute :num_ratings, Integer, default: 0
+    attribute :avg_rating, Float, default: 0.0
   end
 end

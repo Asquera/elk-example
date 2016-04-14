@@ -9,11 +9,13 @@ module Example
       },
       "size" => 0,
       "facets" => {
-          "ratings" => {
-              "terms" => {
-                  "field" => "movie_id", "size" => 10000
-              }
+        "ratings" => {
+          "terms_stats" => {
+            "key_field" => "movie_id",
+            "value_field" => "rating",
+            "size" => 10000
           }
+        }
       }
     }
 
@@ -26,7 +28,7 @@ module Example
     def fetch_hash
       response = client.with(index: 'movies', type: 'rating').search(QUERY_JSON)
       aggs = response['facets']['ratings']['terms']
-      Hash[ *aggs.collect{ |v| [v['term'], v['count']] }.flatten ]
+      Hash[ *aggs.collect{ |v| [v['term'], v] }.flatten ]
     end
   end
 end

@@ -9,6 +9,19 @@ GIT
       faraday
       psych-inherit-file (~> 1.0)
 
+GIT
+  remote: git://github.com/elasticsearch/elasticsearch-ruby.git
+  revision: 47258c97803fe603139062145d3bf62c062ff0fd
+  specs:
+    elasticsearch (1.0.17)
+      elasticsearch-api (= 1.0.17)
+      elasticsearch-transport (= 1.0.17)
+    elasticsearch-api (1.0.17)
+      multi_json
+    elasticsearch-transport (1.0.17)
+      faraday
+      multi_json
+
 PATH
   remote: .
   specs:
@@ -74,7 +87,7 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 1.6)
   dataset!
+  elasticsearch!
   elasticsearch-rake-tasks!
-  eson
   pry
   rake (~> 10.0)

@@ -1,4 +1,5 @@
 require 'rake/task'
+require 'elasticsearch'
 require 'dataset'
 require 'pry'
 
@@ -8,7 +9,7 @@ BASE_DIR = File.dirname(__FILE__)
 DATASET_FILE = 'movies.zip'
 
 def es_client
-  @es_client ||= Eson::HTTP::Client.new(server: 'http://localhost:9200', logger: '/dev/null')
+  @es_client ||= Elasticsearch::Client.new(url: 'http://localhost:9200', log: true)
 end
 
 def tmp_dir(dataset)
@@ -96,13 +97,13 @@ task :upload_bulk do
   seed_file = 'item_seed.json'
 
   File.open(seed_file, 'r') do |file|
-    file.each_slice(2) do |line|
-      index    = JSON.parse(line[0])
-      document = line[1]
+    file.each_slice(2) do |lines|
+      type     = JSON.parse(lines[0])['index']['_type']
+      document = JSON.parse(lines[1])
 
-      es_client.bulk do |b|
-        b.index index: 'movies', type: index['index']['_type'], doc: document
-      end
+      es_client.bulk index: 'movies', body: [
+        { 'index' => { '_type' => type, 'data' => document } }
+      ]
     end
   end
 end

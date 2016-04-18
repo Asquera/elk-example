@@ -10,7 +10,7 @@ package { 'curl':
 }
 
 class { 'ruby':
-  version => '2.0.0'
+  version => '2.2.0'
 }
 
 class { 'ruby::dev': }
@@ -18,8 +18,8 @@ class { 'ruby::dev': }
 class { "elasticsearch":
   status       => 'enabled',
   manage_repo  => true,
-  repo_version => '1.4',
-  version      => '1.4.4',
+  repo_version => '2.x',
+  version      => '2.3.0',
   config       => {
     "path.conf"                   => "/etc/elasticsearch",
     "path.data"                   => "/var/lib/elasticsearch",
@@ -34,20 +34,23 @@ elasticsearch::instance { 'primary':
   config => { "node.name" => "el-example" }
 }
 
-elasticsearch::plugin { 'lmenezes/elasticsearch-kopf':
-  module_dir => 'kopf',
-  instances  => 'primary'
+elasticsearch::plugin { 'license':
+  instances => 'primary'
 }
 
-elasticsearch::plugin { 'polyfractal/elasticsearch-inquisitor':
-  module_dir => 'inquisitor',
-  instances  => 'primary'
+elasticsearch::plugin { 'marvel-agent':
+  instances => 'primary',
+  require   => Elasticsearch::Plugin['license']
+}
+
+elasticsearch::plugin { 'lmenezes/elasticsearch-kopf':
+  instances => 'primary'
 }
 
 # add logstash repository to /etc/apt/sources.list.d/
 apt::source { 'logstash':
   comment     => 'This is the official logstash repository',
-  location    => 'http://packages.elasticsearch.org/logstash/1.3/debian/',
+  location    => 'http://packages.elasticsearch.org/logstash/2.3/debian/',
   repos       => 'main',
   release     => 'stable',
   key         => 'D88E42B4',
@@ -64,7 +67,7 @@ file { '/usr/share/kibana':
 }
 
 exec { 'download_kibana':
-  command => '/usr/bin/curl -L https://download.elasticsearch.org/kibana/kibana/kibana-4.0.1-linux-x64.tar.gz | /bin/tar xvz -C /usr/share/kibana',
+  command => '/usr/bin/curl -L https://download.elasticsearch.org/kibana/kibana/kibana-4.5.0-linux-x64.tar.gz | /bin/tar xvz -C /usr/share/kibana',
   require => [ Package['curl'], File['/usr/share/kibana'], Class['elasticsearch'] ],
 }
 

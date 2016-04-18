@@ -1,7 +1,5 @@
 ---
 properties:
-  _id:
-    enabled: false
   id:
     enabled: false
   title:
@@ -15,7 +13,6 @@ properties:
     format: "YYYY-MM-dd"
   imdb_url:
     type: string
-    enabled: false
   genre:
     type: string
     index: not_analyzed

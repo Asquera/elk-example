@@ -4,4 +4,5 @@ gemspec
 
 gem 'elasticsearch-rake-tasks', github: 'Asquera/elasticsearch-rake-tasks'
 
-gem 'eson'
+# gem 'eson'
+gem 'elasticsearch', git: 'git://github.com/elasticsearch/elasticsearch-ruby.git'

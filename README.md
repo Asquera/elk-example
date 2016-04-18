@@ -7,11 +7,21 @@ ELK stack VM with Vagrant and Puppet including the Movies100k rating dataset by 
 
 The VM is set up to install the following tools / frameworks.
 
-* Elasticsearch 2.3.0 with plugin [kopf](https://github.com/lmenezes/elasticsearch-kopf), [inquisitor](https://github.com/polyfractal/elasticsearch-inquisitor)
+* Elasticsearch 2.3.0 with plugin [kopf](https://github.com/lmenezes/elasticsearch-kopf)
 * Logstash 2.3
 * Kibana 4.5.0
 
 Set up the box from inside the `vagrant` folder, this requires a recent Ruby. First all gems are installed, then all puppet modules and finally the box is provisioned.
+
+The Vagrant setup also requires a few plugins, [landrush](https://github.com/vagrant-landrush/landrush) and [vbguest](https://github.com/dotless-de/vagrant-vbguest)
+(only when using VirtualBox provider).
+
+```
+$ vagrant plugin install landrush
+$ vagrant plugin install vagrant-vbguest  # only with Virtualbox
+```
+
+To install all gems and set up Puppet run:
 
 ```
 $ bundle install

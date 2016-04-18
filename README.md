@@ -36,12 +36,7 @@ $ vagrant ssh
 ```
 
 
-## Logstash
-
-TODO
-
-
-## Kibana
+### Kibana
 
 Kibana is installed into the folder `/home/vagrant/kibana/kibana-4.5.0-linux`.
 It should run already and is available at url `http://localhost:5601` inside the VM. To
@@ -56,6 +51,14 @@ $ bin/kibana plugin --install elasticsearch/marvel/2.3.1
 from the Kibana src folder.
 
 
-## Marvel
+### Marvel
 
 To install Marvel follow the steps in the [Get Started Guide](https://www.elastic.co/guide/en/marvel/current/installing-marvel.html).
+
+
+
+## Movielens data set
+
+There is a gem that can be used to install a data set, the [Movielens data set](http://grouplens.org/datasets/movielens/) by Grouplens that
+offers data from their movie recommendation service. For more information on how to install and use this data set
+check [this Readme!](dataset/movies-100k/Readme.md).

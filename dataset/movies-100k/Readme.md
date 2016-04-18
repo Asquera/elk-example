@@ -5,10 +5,10 @@ This folder contains scripts and tasks to import the [movies-100k](http://groupl
 It also allows to download and import the [movies-1M](http://grouplens.org/datasets/movielens/) dataset with 1 million ratings from 6.000 users on 4.000 movies.
 
 
-The repository should be available at `/vagrant` inside the VM. Change directory and set up the dataset.
+The repository should be available at `/vagrant` inside the VM. Change directory and to set up the project run:
 
 ```
-$ cd /vagrant/dateset/movies100k
+$ cd /vagrant/dataset/movies-100k
 $ bundle install
 ```
 
@@ -24,7 +24,7 @@ $ rake -T
 Go to the data set folder and run the following commands to upload the dataset to Elasticsearch
 
 ```bash
-$ cd /vagrant/dataset/movies100k
+$ cd /vagrant/dataset/movies-100k
 ```
 
 Then run the rake task, for the movies 100k data set:
@@ -50,16 +50,16 @@ $ rake es:movies:create[http://localhost:9200,movies]
 
 This creates a new index named "movies" at the local Elasticsearch instance and applies the template with the same name.
 
-The last step is to bulk upload the seed file to Elasticsearch, which is done by:
+The last step is to bulk upload the generated seed file to Elasticsearch, which is done by:
 
 ```
 $ curl -X POST 'http://localhost:9200/movies/_bulk' --data-binary @item_seed.json > /dev/null
 ```
 
-which might fail for the 1M documents bulk file or use the bulk upload command (takes a bit longer)
+which might fail for the 1M documents bulk file. Alternatively use the rake command to bulk upload (takes a bit longer)
 
 ```
 $ rake upload_bulk
 ```
 
-this uploads all entries from the bulk JSON file to the Elasticsearch index named `movies`.
+this uploads all entries from the `seed.json` file to the Elasticsearch index named `movies`.

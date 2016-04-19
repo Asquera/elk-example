@@ -14,8 +14,6 @@ FORGE
     ispavailability-file_concat (0.3.0)
     puppetlabs-apt (2.2.2)
       puppetlabs-stdlib (< 5.0.0, >= 4.5.0)
-    puppetlabs-java (1.5.0)
-      puppetlabs-stdlib (< 5.0.0, >= 2.4.0)
     puppetlabs-ruby (0.4.0)
       puppetlabs-stdlib (< 5.0.0, >= 3.2.0)
     puppetlabs-stdlib (4.11.0)
@@ -23,14 +21,15 @@ FORGE
     saz-vim (2.4.0)
     theforeman-git (1.6.0)
       puppetlabs-stdlib (< 5.0.0, >= 2.0.0)
+    tylerwalts-jdk_oracle (1.4.0)
 
 DEPENDENCIES
   elasticsearch-elasticsearch (>= 0)
   elasticsearch-logstash (>= 0)
   puppetlabs-apt (>= 0)
-  puppetlabs-java (>= 0)
   puppetlabs-ruby (>= 0)
   puppetlabs-stdlib (>= 0)
   saz-vim (>= 0)
   theforeman-git (>= 0)
+  tylerwalts-jdk_oracle (>= 0)
 

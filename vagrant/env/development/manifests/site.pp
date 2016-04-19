@@ -2,9 +2,11 @@ node default {
   include apt
   include vim
   include git
-  include java
 }
 
+class { 'jdk_oracle':
+  version => "8"
+}
 package { 'curl':
   ensure => installed
 }
@@ -86,5 +88,5 @@ service { 'kibana':
   require => File['/etc/init.d/kibana'],
 }
 
-Package['java'] -> Package['elasticsearch']
-Package['java'] -> Package['logstash']
+Class['jdk_oracle'] -> Package['elasticsearch']
+Class['jdk_oracle'] -> Package['logstash']

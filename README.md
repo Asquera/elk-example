@@ -3,6 +3,14 @@ Elasticsearch Example
 
 ELK stack VM with Vagrant and Puppet including the Movies100k rating dataset by Movielens.
 
+## Prerequisites
+
+You need the following tools:
+
+- Ruby 2.x
+- Vagrant 1.8.x
+- bundler
+
 ## Setup
 
 The VM is set up to install the following tools / frameworks.

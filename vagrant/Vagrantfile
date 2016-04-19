@@ -16,10 +16,11 @@ Vagrant.configure(2) do |config|
 
   config.vm.synced_folder "..", "/vagrant", type: 'nfs'
 
-  config.vm.provision "puppet" do |puppet|
-    puppet.manifests_path = "manifests"
-    puppet.manifest_file  = "site.pp"
-    puppet.module_path    = ["modules", "custom_modules"]
+  config.vm.provision :puppet do |puppet|
+    puppet.module_path       = ["modules", "custom_modules"]
+    puppet.environment       = 'development'
+    puppet.environment_path  = 'env'
+    puppet.options           = ['--verbose', '--debug']
   end
 
   config.vm.provider "vmware_fusion" do |v|

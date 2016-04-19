@@ -10,7 +10,7 @@ mod 'theforeman-git'
 mod 'puppetlabs-ruby'
 mod "puppetlabs/apt"
 mod "puppetlabs/stdlib"
-mod "puppetlabs/java"
 
 mod "elasticsearch/elasticsearch"
 mod "elasticsearch/logstash"
+mod "tylerwalts/jdk_oracle"

@@ -26,7 +26,8 @@ class { "elasticsearch":
     "path.conf"                   => "/etc/elasticsearch",
     "path.data"                   => "/var/lib/elasticsearch",
     "gateway.expected_nodes"      => 1,
-    "gateway.recover_after_nodes" => 1
+    "gateway.recover_after_nodes" => 1,
+    "network.host"                => "0.0.0.0"
   }
 }
 

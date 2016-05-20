@@ -13,8 +13,9 @@ module Example
 
     def initialize(dataset_dir, client)
       @dataset_dir = dataset_dir
-      @genres = load_genres('u.genre')
-      @client = client
+      @genres  = load_genres('u.genre')
+      @client  = client
+      @ratings = {}
     end
 
     def load_genres(filename)
@@ -53,9 +54,6 @@ module Example
     end
 
     def create_movie_seed_file(input_file, output)
-      # get all ratings as aggregations
-      aggs = RatingsAggregation.new(client).fetch_hash
-
       File.open(File.join(dataset_dir, input_file), 'r:iso-8859-1') do |file|
         file.each_line do |line|
           components = line.chomp.split("|")
@@ -75,13 +73,16 @@ module Example
             genre:        genre,
           )
 
-          if aggs[id]
-            movie.num_ratings = aggs[id].fetch('count') { 0 }
-            movie.avg_rating  = aggs[id].fetch('mean') { 0.0 }
+          if ratings = @ratings[id]
+            if movie.num_ratings = ratings.count > 0
+              movie.avg_rating = ratings.inject(0, &:+) / movie.num_ratings
+            else
+              movie.avg_rating = 0.0
+            end
           end
+
           movie.video_release_date = video_date unless video_date.empty?
 
-          # write movie as ES bulk entries
           output << { index: { '_type' => 'movie' } }.to_json + "\n"
           output << movie.attributes.to_json + "\n"
         end
@@ -95,14 +96,21 @@ module Example
 
           user_id   = l[0]
           movie_id  = l[1]
-          ratings   = l[2]
-          # transform seconds from epoch to milliseconds
+          rating    = l[2]
           timestamp = Integer(l[3]) * 1000
 
           output << "{ \"index\": { \"_type\": \"rating\" } }\n"
-          output << "{ \"user_id\": #{user_id}, \"movie_id\": #{movie_id}, \"rating\": #{ratings}, \"timestamp\": #{timestamp} }\n"
+          output << "{ \"user_id\": #{user_id}, \"movie_id\": #{movie_id}, \"rating\": #{rating}, \"timestamp\": #{timestamp} }\n"
+
+          add_rating(movie_id, rating)
         end
       end
+    end
+
+    private
+
+    def add_rating(movie_id, rating)
+      (@ratings[movie_id] ||= []) << rating
     end
 
     def detect_genres(list)

@@ -4,6 +4,7 @@ module Example
   class DataSet1MLoader
     attr_reader :dataset_dir
     attr_reader :genres
+    attr_reader :client
 
     GENDERS = {
       'M' => 'male',
@@ -34,8 +35,9 @@ module Example
       "20" => "writer",
     }
 
-    def initialize(dataset_dir)
+    def initialize(dataset_dir, client)
       @dataset_dir = dataset_dir
+      @client = client
     end
 
     def create_movie_seed_file(input_file, output)

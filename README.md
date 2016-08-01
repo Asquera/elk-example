@@ -50,14 +50,6 @@ Kibana is installed into the folder `/home/vagrant/kibana/kibana-4.5.0-linux`.
 It should run already and is available at url `http://localhost:5601` inside the VM. To
 access Kibana from the host access [http://172.17.1.22:5601](http://172.17.1.22:5601).
 
-Install Marvel plugin in Kibana by running
-
-```
-$ bin/kibana plugin --install elasticsearch/marvel/2.3.1
-```
-
-from the Kibana src folder.
-
 
 ### Marvel
 

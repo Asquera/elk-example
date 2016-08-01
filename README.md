@@ -46,7 +46,7 @@ $ vagrant ssh
 
 ### Kibana
 
-Kibana is installed into the folder `/home/vagrant/kibana/kibana-4.5.0-linux`.
+Kibana is installed into the folder `/usr/share/kibana/kibana-4.5.0-linux-x64/`.
 It should run already and is available at url `http://localhost:5601` inside the VM. To
 access Kibana from the host access [http://172.17.1.22:5601](http://172.17.1.22:5601).
 

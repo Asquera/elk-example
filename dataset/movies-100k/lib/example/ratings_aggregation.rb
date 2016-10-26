@@ -33,7 +33,7 @@ module Example
 
     def fetch_hash
       response = client.search index: 'movies', type: 'rating', body: QUERY_JSON
-      aggs = response['aggs']['ratings']['terms']
+      aggs = response['aggregations']['ratings']['buckets']
       Hash[ *aggs.collect{ |v| [v['term'], v] }.flatten ]
     end
   end

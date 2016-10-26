@@ -83,7 +83,7 @@ task :create_1m_data_set => [:download_1m] do
 
   # just create seed file from dataset
   File.open(seed_file, 'w') do |output|
-    loader = Example::DataSet1MLoader.new(dataset_dir, es_client)
+    loader = Example::DataSet1MLoader.new(dataset_dir)
     loader.create_user_seed_file('users.dat', output)
     loader.create_ratings_seed_file('ratings.dat', output)
     loader.create_movie_seed_file('movies.dat', output)

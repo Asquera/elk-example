@@ -1,40 +1,29 @@
 GIT
-  remote: git://github.com/Asquera/elasticsearch-rake-tasks.git
-  revision: e2c788e785358e7fbc0809a9c56214d69dccb6a6
+  remote: https://github.com/Asquera/elasticsearch-rake-tasks.git
+  revision: bdb85aa0841a291f5b626789c1bf62529c8c2c77
   specs:
     elasticsearch-rake-tasks (0.0.1)
       activesupport (~> 3.2.0)
-      eson
-      eson-more
-      faraday
+      eson (~> 0.8)
+      eson-more (~> 0.8)
+      faraday (~> 0.8.11)
+      net-http-persistent (~> 2.9.4)
       psych-inherit-file (~> 1.0)
-
-GIT
-  remote: git://github.com/elasticsearch/elasticsearch-ruby.git
-  revision: 47258c97803fe603139062145d3bf62c062ff0fd
-  specs:
-    elasticsearch (1.0.17)
-      elasticsearch-api (= 1.0.17)
-      elasticsearch-transport (= 1.0.17)
-    elasticsearch-api (1.0.17)
-      multi_json
-    elasticsearch-transport (1.0.17)
-      faraday
-      multi_json
 
 PATH
   remote: .
   specs:
     dataset (0.0.1)
+      elasticsearch (~> 1.1)
       virtus (~> 1.0)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (3.2.21)
+    activesupport (3.2.22.5)
       i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
-    addressable (2.3.7)
+    addressable (2.4.0)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
@@ -44,7 +33,15 @@ GEM
       descendants_tracker (~> 0.0.1)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
-    equalizer (0.0.9)
+    elasticsearch (1.1.0)
+      elasticsearch-api (= 1.1.0)
+      elasticsearch-transport (= 1.1.0)
+    elasticsearch-api (1.1.0)
+      multi_json
+    elasticsearch-transport (1.1.0)
+      faraday
+      multi_json
+    equalizer (0.0.11)
     eson (0.8.0)
       eson-core (= 0.8.0)
       eson-dsl (= 0.8.0)
@@ -59,12 +56,12 @@ GEM
       net-http-persistent
     eson-more (0.8.0)
       eson-core
-    faraday (0.8.9)
+    faraday (0.8.11)
       multipart-post (~> 1.2.0)
     i18n (0.7.0)
-    ice_nine (0.11.1)
+    ice_nine (0.11.2)
     method_source (0.8.2)
-    multi_json (1.10.1)
+    multi_json (1.12.1)
     multipart-post (1.2.0)
     net-http-persistent (2.9.4)
     pry (0.10.1)
@@ -74,8 +71,8 @@ GEM
     psych-inherit-file (1.0.0)
     rake (10.4.2)
     slop (3.6.0)
-    thread_safe (0.3.4)
-    virtus (1.0.4)
+    thread_safe (0.3.5)
+    virtus (1.0.5)
       axiom-types (~> 0.1)
       coercible (~> 1.0)
       descendants_tracker (~> 0.0, >= 0.0.3)
@@ -87,7 +84,9 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 1.6)
   dataset!
-  elasticsearch!
   elasticsearch-rake-tasks!
   pry
   rake (~> 10.0)
+
+BUNDLED WITH
+   1.13.6

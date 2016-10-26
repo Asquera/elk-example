@@ -2,7 +2,4 @@ source 'https://rubygems.org'
 
 gemspec
 
-gem 'elasticsearch-rake-tasks', github: 'Asquera/elasticsearch-rake-tasks'
-
-# gem 'eson'
-gem 'elasticsearch', git: 'git://github.com/elasticsearch/elasticsearch-ruby.git'
+gem 'elasticsearch-rake-tasks', git: 'https://github.com/Asquera/elasticsearch-rake-tasks.git'

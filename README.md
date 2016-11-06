@@ -8,7 +8,8 @@ ELK stack VM with Vagrant and Puppet including the Movies100k rating dataset by 
 You need the following tools:
 
 - Ruby 2.x
-- Vagrant 1.8.x
+- Vagrant 1.8.6
+- VirtualBox 5.1.6
 - bundler
 
 ## Setup
@@ -32,9 +33,10 @@ $ vagrant plugin install vagrant-vbguest  # only with Virtualbox
 To install all gems and set up Puppet run:
 
 ```
+$ cd vagrant
 $ bundle install
 $ librarian-puppet install
-$ vagrant up
+$ vagrant up --provider virtualbox
 ```
 
 After provisioning succeeds log into the box
@@ -42,6 +44,10 @@ After provisioning succeeds log into the box
 ```
 $ vagrant ssh
 ```
+
+### Kopf
+
+The [kopf plugin](https://github.com/lmenezes/elasticsearch-kopf) offers a web interface to the Elasticsearch cluster and is available at [http://elastic.dev:9200/\_plugin/kopf/](http://elastic.dev:9200/_plugin/kopf/#!/cluster) and via the IP of the VM, [http://172.17.1.22:9200/\_plugin/kopf/](http://172.17.1.22:9200/_plugin/kopf). The former URL is available via the landrush vagrant plugin.
 
 
 ### Kibana

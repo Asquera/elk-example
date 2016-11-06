@@ -4,17 +4,19 @@ Movielens Dataset
 This folder contains scripts and tasks to import the [movies-100k](http://grouplens.org/datasets/movielens/) dataset that contains 100.000 ratings from nearly 1.000 users for about 1.700 different movies, all part of the [Movielens.org](http://movielens.org) website.
 It also allows to download and import the [movies-1M](http://grouplens.org/datasets/movielens/) dataset with 1 million ratings from 6.000 users on 4.000 movies.
 
-
-The repository should be available at `/vagrant` inside the VM. Change directory and to set up the project run:
+The repository should be available at `/vagrant` inside the VM. Log into the VM, change to the folder and set up the project with bundler:
 
 ```bash
+$ vagrant ssh
 $ cd /vagrant/dataset/movies-100k
+$ gem install bundler
 $ bundle install
 ```
 
-This project folder also contains a Rakefile, to see all available rake tasks run:
+The project folder also contains a Rakefile in the folder `/vagrant/dataset/movies-100k`. Change directory and then run rake to list all available tasks:
 
 ```bash
+$ cd /vagrant/dataset/movies-100k
 $ bundle exec rake -T
 ```
 
